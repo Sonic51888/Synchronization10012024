@@ -51,16 +51,19 @@ public class Main {
                 });
     }
 
-    public static synchronized void addCountRepetitionsR(int numberOfRepetitionsR) {
+    public static void addCountRepetitionsR(int numberOfRepetitionsR) {
         int value;
-        if (sizeToFreq.containsKey(numberOfRepetitionsR)) {
-            value = sizeToFreq.get(numberOfRepetitionsR);
-            value += 1;
-            sizeToFreq.put(numberOfRepetitionsR, value);
-        } else {
-            sizeToFreq.put(numberOfRepetitionsR, 1);
+        synchronized (sizeToFreq) {
+            if (sizeToFreq.containsKey(numberOfRepetitionsR)) {
+                value = sizeToFreq.get(numberOfRepetitionsR);
+                value += 1;
+                sizeToFreq.put(numberOfRepetitionsR, value);
+            } else {
+                sizeToFreq.put(numberOfRepetitionsR, 1);
+            }
         }
     }
+
 
     public static String generateRoute(String letters, int length) {
         Random random = new Random();
